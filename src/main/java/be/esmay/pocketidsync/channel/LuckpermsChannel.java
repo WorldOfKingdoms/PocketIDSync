@@ -34,7 +34,7 @@ public final class LuckpermsChannel extends JedisPubSub {
             if (user != null) {
                 this.plugin.getUserIdCache().put(uuid, user.getId());
 
-                this.plugin.updateGroups(uuid, uuid.toString().split("-")[0], user.getUserGroups()).join();
+                this.plugin.updateGroups(uuid, uuid.toString().split("-")[0], user.isAdmin(), user.getUserGroups()).join();
             }
         });
     }

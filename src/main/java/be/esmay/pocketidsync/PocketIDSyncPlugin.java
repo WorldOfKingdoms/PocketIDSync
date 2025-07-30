@@ -73,7 +73,7 @@ public final class PocketIDSyncPlugin {
         this.defaultConfiguration = new DefaultConfiguration(this.dataDirectory);
     }
 
-    public CompletableFuture<Boolean> updateGroups(UUID uniqueId, String username, List<UserGroup> groups) {
+    public CompletableFuture<Boolean> updateGroups(UUID uniqueId, String username, boolean isAdmin, List<UserGroup> groups) {
         String userId = this.userIdCache.get(uniqueId);
         if (userId == null) {
             this.logger.warn("User ID for player {} not found in cache, skipping group update.", username);
@@ -101,7 +101,7 @@ public final class PocketIDSyncPlugin {
                 }
             });
 
-            if (groups.stream().noneMatch(group -> this.defaultConfiguration.getSyncGroups().contains(group.getName().toLowerCase()))) {
+            if (groups.stream().noneMatch(group -> this.defaultConfiguration.getSyncGroups().contains(group.getName().toLowerCase())) && !isAdmin) {
                 this.logger.info("No valid groups found for user {}, deleting user from PocketID.", username);
                 this.pocketID.users().deleteUser(userId).join();
                 this.userIdCache.remove(uniqueId);

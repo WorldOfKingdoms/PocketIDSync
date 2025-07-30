@@ -27,7 +27,7 @@ public class PlayerJoinListener {
                 List<CustomClaim> claims = user.modifyUserClaims(player.getUniqueId(), player.getUsername());
                 user.setFirstName(player.getUsername());
 
-                this.plugin.updateGroups(player.getUniqueId(), player.getUsername(), user.getUserGroups()).thenAccept((bool) -> {
+                this.plugin.updateGroups(player.getUniqueId(), player.getUsername(), user.isAdmin(), user.getUserGroups()).thenAccept((bool) -> {
                     if (!bool) return; // The user has been deleted because none of the groups matched, no need to continue.
 
                     this.plugin.getPocketID().customClaims().updateUserClaims(user.getId(), claims);

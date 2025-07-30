@@ -77,7 +77,7 @@ public final class PocketIDCommand implements SimpleCommand {
                 player.sendMessage(successMessage);
             }
 
-            boolean success = this.plugin.updateGroups(player.getUniqueId(), player.getUsername(), user.getUserGroups()).join();
+            boolean success = this.plugin.updateGroups(player.getUniqueId(), player.getUsername(), user.isAdmin(), user.getUserGroups()).join();
             if (!success)
                 return; // The user has been deleted because none of the groups matched, no need to continue. (Server would be stupid to give permission to a user that has no groups, but just in case)
 
