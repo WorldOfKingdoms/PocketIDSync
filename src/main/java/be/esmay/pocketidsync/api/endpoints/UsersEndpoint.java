@@ -65,6 +65,7 @@ public class UsersEndpoint extends BaseEndpoint {
                 "email", email,
                 "firstName", player.getUsername(),
                 "isAdmin", false,
+                "displayName", player.getUsername(),
                 "username", player.getUniqueId().toString().split("-")[0]
         );
 
