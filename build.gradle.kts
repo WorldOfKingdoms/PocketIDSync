@@ -21,16 +21,16 @@ repositories {
     mavenCentral()
     mavenLocal()
 
-    maven("https://nexus.velocitypowered.com/repository/maven-public/")
+    maven("https://repo.papermc.io/repository/maven-public/")
     maven(url = "https://jitpack.io")
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
+    compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     compileOnly("net.luckperms:api:5.4")
     implementation("redis.clients:jedis:5.2.0")
 
-    annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
+    annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
 
     compileOnly("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")
