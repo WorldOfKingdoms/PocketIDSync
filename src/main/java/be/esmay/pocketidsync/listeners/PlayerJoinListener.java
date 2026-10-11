@@ -41,6 +41,9 @@ public class PlayerJoinListener {
                 player.sendMessage(ChatUtils.format(this.plugin.getDefaultConfiguration().getRegisterAccountMessage()));
                 return;
             }
+        }).exceptionally(throwable -> {
+            this.plugin.getLogger().error("PocketID sync on join failed for {}", player.getUsername(), throwable);
+            return null;
         });
     }
 

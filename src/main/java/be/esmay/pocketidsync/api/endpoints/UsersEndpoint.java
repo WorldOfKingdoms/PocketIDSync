@@ -8,8 +8,6 @@ import be.esmay.pocketidsync.api.models.User;
 import com.google.gson.reflect.TypeToken;
 import com.velocitypowered.api.proxy.Player;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,7 +30,7 @@ public class UsersEndpoint extends BaseEndpoint {
         });
 
         return result.thenApply(pagedResponse -> pagedResponse.getData().stream()
-                .filter(user -> user.getMinecraftUUID().equals(uniqueId))
+                .filter(user -> uniqueId.equals(user.getMinecraftUUID()))
                 .findFirst()
                 .orElse(null));
     }
@@ -42,7 +40,7 @@ public class UsersEndpoint extends BaseEndpoint {
         });
 
         return result.thenApply(pagedResponse -> pagedResponse.getData().stream()
-                .filter(user -> user.getEmail().equals(email))
+                .filter(user -> email.equalsIgnoreCase(user.getEmail()))
                 .findFirst()
                 .orElse(null));
     }
@@ -86,11 +84,7 @@ public class UsersEndpoint extends BaseEndpoint {
     }
     
     public CompletableFuture<OneTimeAccessToken> createOneTimeAccessToken(String userId) {
-        String expiresAt = Instant.now().plus(1, ChronoUnit.HOURS).toString();
-        Map<String, String> body = Map.of(
-            "expiresAt", expiresAt,
-            "userId", userId
-        );
-        return post("/users/" + userId + "/one-time-access-token", body, OneTimeAccessToken.class);
+        // Pocket ID reads only "ttl"; without it the code lives 15 minutes.
+        return post("/users/" + userId + "/one-time-access-token", Map.of("ttl", "1h"), OneTimeAccessToken.class);
     }
 }

@@ -36,6 +36,9 @@ public final class LuckpermsChannel extends JedisPubSub {
 
                 this.plugin.updateGroups(uuid, uuid.toString().split("-")[0], user.isAdmin(), user.getUserGroups()).join();
             }
+        }).exceptionally(throwable -> {
+            this.plugin.getLogger().error("PocketID sync after LuckPerms update failed for {}", uuid, throwable);
+            return null;
         });
     }
 }

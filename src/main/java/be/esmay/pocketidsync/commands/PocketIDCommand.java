@@ -82,6 +82,10 @@ public final class PocketIDCommand implements SimpleCommand {
                 return; // The user has been deleted because none of the groups matched, no need to continue. (Server would be stupid to give permission to a user that has no groups, but just in case)
 
             this.plugin.getPocketID().customClaims().updateUserClaims(user.getId(), claims);
+        }).exceptionally(throwable -> {
+            this.plugin.getLogger().error("PocketID command failed for {}", player.getUsername(), throwable);
+            player.sendMessage(ChatUtils.format(this.plugin.getDefaultConfiguration().getCommandFailedToRegister()));
+            return null;
         });
     }
 
